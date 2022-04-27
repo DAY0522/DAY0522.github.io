@@ -62,9 +62,9 @@ date: 2022-04-27
 
 
 
-해당 포스팅에서 작성한 .md파일의 코드를 참고용으로 공유하고자 한다.
+해당 포스팅에서 작성한 .md파일의 코드를 참고용으로 공유하고자 한다. 아래 링크에 들어가 Raw로 열어보면 포스팅을 위해 작성한 머리말, 본문 등 코드를 확인할 수 있다.
 
-[*2022-04-28-Github-blog-post.md*]()
+[*2022-04-28-Github-blog-post.md*](https://github.com/DAY0522/DAY0522.github.io/blob/master/_posts/2022-04-28-Github-blog-post.md)
 
 ---
 ### 참고 사이트
