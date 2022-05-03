@@ -192,7 +192,7 @@ Content-Type: text/html
 - **Version**: HTTP의 버전  
 
 - **Status Code**: 사용자의 요청에 대한 서버의 처리 결과
-  - 주요 Status Code에 대해 자세히 알고 싶다면 [여기](https://day0522.github.io/posts/Introduction-of-Web/) 게시글을 확인하자.
+  - 주요 Status Code에 대해 자세히 알고 싶다면 [여기](https://day0522.github.io/posts/Status-code/) 게시글을 확인하자.
 - **Header**: 사용자와 상호작용하기 위한 데이터를 담는 부분
   > ex) 사용자(웹 브라우저)에서 서버의 응답 데이터를 처리하는 방식 및 형식에 대한 정보, 서버에서 사용자를 식별하기 위한 쿠키 발급 정보 등
   - Content-Type: 서버의 응답 데이터를 웹 브라우저에서 처리할 방식과 형식
