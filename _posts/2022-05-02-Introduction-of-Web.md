@@ -12,10 +12,10 @@ toc: true
 toc_sticky: true
  
 date: 2022-05-02
-last_modified_at: 2022-05-02
+last_modified_at: 2022-05-03
 ---
 
-학과 웹 사이트 프로젝트에 지원하기 위해 백엔드 스터디를 신청했으며, 본격적으로 백엔드 공부를 하기에 앞서 웹에 대해 공부하고자 한다.  
+학과 복지를 위한 웹 사이트 프로젝트에 지원하기 위해 백엔드에 대한 공부가 필요했다. 이를 위해 백엔드 스터디를 신청했으며, 본격적으로 백엔드 공부를 하기에 앞서 웹에 대해 공부하고자 한다.  
 
 # 1. 웹이란 무엇인가?
 `웹(Web)`을 공부하기 위해 기본적인 용어에 대해 알아보자.  
@@ -50,7 +50,7 @@ last_modified_at: 2022-05-02
 
 - **JS(JavaScript)**
   - 페이지 내에서의 행위들을 설정할 수 있음
-- *Etc* : 문서, 이미지, 동영상, 폰트 등
+- **Etc** : 문서, 이미지, 동영상, 폰트 등
 
 ## 📌 URI(URL)
 > 쉽게 말하자면 URI는 주소창에 출력되는 주소 전체이다.  
@@ -118,3 +118,89 @@ last_modified_at: 2022-05-02
   -  TCP 혹은 TLS(암호화된 TCP)를 사용해 통신하고 기본 포트로 80(HTTP), 443(HTTPS) 포트를 사용한다. 이때 포트 번호는 서버의 설정을 통해 변경 가능하다.
 
 HTTP는 사용자가 서버에 요청을 하는 `Request`와 사용자의 요청에 대한 서버의 응답인 `Response`로 나누어진다.  
+
+## 📌 HTTP Request
+`HTTP Request`는 서버에 대한 요청을 의미한다.  
+HTTP Request의 구조 중 가장 첫번째 줄에는 `Method`, `Path`, `Version`으로 구성된다. 두 번째 줄부터는 `Header` 부분이며, 마지막에는 `Body`로 구성된다.
+
+```HTTP
+GET /index.html HTTP/1.1
+Host: day0522.github.io
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36
+```
+
+### **HTTP Request 구성요소**
+- **Method**: 서버에 요청 시 수행하고자 하는 동작을 나타냄
+  > 서버에서 설정하는 방식, 웹 어플리케이션의 처리에 따라 수행하는 방식이 다를 수 있음   
+  - OPTIONS: 요청하는 리소스가 허용되는 메소드 목록을 반환  
+  - GET: 리소스를 요청  
+    >ex) 게시물/프로필 보기, 이미지 등*
+  - HEAD: GET 메소드와 동일하지만, Response의 Body 부분은 받지 않고, Header만 받음
+    >ex) 서버의 상태 확인 등
+  - POST: 특정 리소스 생성 및 데이터 추가를 위해 값을 제출할 때 사용
+    >ex) 게시물/프로필 생성 등
+  - PUT: 특정 리소스의 내용을 보낸 값으로 설정
+    >ex) 생성/업데이트 등 
+  - PATCH: 특정 리소스의 내용 중 보낸 값의 key만 변경
+    >ex) 게시글 업데이트 등
+  - DELETE: 특정 리소스를 삭제
+    >ex) 게시물 삭제 등
+  - TRACE: 요청받은 값을 Response의 Body로 다시 클라이언트에게 되돌려줌  
+
+- **Path**: 사용자가 서버에 요청하는 웹 리소스의 경로
+
+- **Version**: HTTP의 버전
+
+- **Header**
+  - `이름: 값` 형태로 이루어짐
+  - 서버에 추가 정보를 전달하는 데이터 부분
+  - 사용자와 서버가 상호작용하기 위한 정보를 담는 부분
+    *ex) 사용자 데이터의 처리 방식 및 형식에 대한 정보, 서버에서 사용자를 식별하기 위한 쿠기 정보 등*
+  
+  **주요 Header**
+  - Host: 데이터를 보내는 서버의 주소
+  - Cookie: 사용자를 식별하기 위해 사용하는 정보
+  - User-Agent: 사용자가 사용하는 프로그램의 정보
+  - Referer: 페이지 이동 시 이전 URI의 정보
+  - Content-Type
+    - 사용자가 전달하는 데이터의 처리 방식과 형식
+    - 사용자와 서버 간의 데이터 처리 방식이 일치돼야 정상적인 데이터 통신이 이루어짐
+
+- **Body**: 사용자가 입력한 데이터를 서버에 전달할 때 데이터를 담는 부분
+
+## 📌 HTTP Response
+`HTTP Response`는 사용자의 요청에 대한 서버의 응답을 의미한다.  
+HTTP Request의 구조 중 가장 첫번째 줄에는 `Version`, `Status code`로 구성된다. 두 번째 줄부터는 `Header` 부분이며, 마지막에는 `Body`로 구성된다.
+```HTTP
+HTTP/1.1 200 OK
+Server: Apache/2.4.29 (Ubuntu)
+Content-Length: 61
+Connection: Keep-Alive
+Content-Type: text/html
+
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+</body>
+</html>
+```  
+
+### **HTTP Response 구성요소**
+- **Version**: HTTP의 버전  
+
+- **Status Code**: 사용자의 요청에 대한 서버의 처리 결과
+  - 주요 Status Code에 대해 자세히 알고 싶다면 [여기](https://day0522.github.io/posts/Introduction-of-Web/) 게시글을 확인하자.
+- **Header**: 사용자와 상호작용하기 위한 데이터를 담는 부분
+  > ex) 사용자(웹 브라우저)에서 서버의 응답 데이터를 처리하는 방식 및 형식에 대한 정보, 서버에서 사용자를 식별하기 위한 쿠키 발급 정보 등
+  - Content-Type: 서버의 응답 데이터를 웹 브라우저에서 처리할 방식과 형식
+  - Content-Length: 서버가 사용자에게 응답해주는 데이터의 길이
+  - Server: 서버가 사용하는 소프트웨어의 정보
+  - Allow: 허용되는 Method 목록을 사용자에게 알려줄 때 사용
+  - LocationL 300번 영역의 응답 코드 사용 시 변경된 웹 리소스의 주소
+  - Set-Cookie
+    - 사용자에게 쿠키를 발급할 때 사용
+    - 해당 헤더를 받은 웹 브라우저는 해당 쿠키를 저장
+- **Body**: 서버가 사용자에게 응답하는 데이터를 담는 부분
