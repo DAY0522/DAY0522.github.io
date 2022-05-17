@@ -33,7 +33,7 @@ last_modified_at: 2022-05-14
 
 해당 과정을 거치면 [그래프](https://day0522.github.io/posts/graph/)에 연결된 모든 정점을 단계별로 방문할 수 있다.
 
-## 💡 기본 예제 코드(Python)
+## 📂 기본 예제 코드(Python)
 
 - graph는 각 인덱스 원소에 대한 인접 원소
 - visited는 각 원소의 방문 여부를 저장하는 리스트(방문 시 True, 미방문 시 False)
@@ -77,6 +77,52 @@ visited = [False]*(8+1) # (총 노드의 개수 + 인덱스 0 저장) 크기로 
 
 # bfs 실행
 bfs(graph, 1, visited)
+```
+
+## 💡 미로 예제에 적용
+
+다음 코드는 미로 예제에 대해 BFS를 적용한 코드이다.
+
+```Python
+# BFS를 미로 문제에 적용
+from collections import deque
+
+# n개의 행, m개의 열
+n, m = map(int, input().split())
+
+# 미로의 정보 입력
+maze = []
+for i in range(n):
+    maze.append(list(map(int, input())))
+
+# 방향 정보(상하좌우)
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+# BFS maze 구현
+def bfs(x, y): # x, y는 시작점
+    queue = deque()
+    queue.append((x, y)) # 큐에 시작점 삽입
+
+    # 큐가 빌 때까지 반복
+    while queue:
+        x, y = queue.popleft()
+        # 현재 위치에서 4가지 방향으로 위치 확인
+        for i in range(4):
+            nx = x + dx[i] # x: 열
+            ny = y + dy[i] # y: 행
+            # 미로 찾기 공간을 벗어난 경우 무시
+            if nx<0 or nx>=n or ny<0 or ny>=m:
+                continue
+            # 아직 방문하지 않은 노드에 대해서만 최단 거리 기록
+            if maze[nx][ny] == 1:
+                queue.append((nx, ny))
+                maze[nx][ny] = maze[x][y]+1
+    # 맨 끝까지의 최단 거리 반환
+    print(maze[n-1][m-1])
+
+# BFS 수행 결과 출력
+print(bfs(0, 0))
 ```
 
 ---
