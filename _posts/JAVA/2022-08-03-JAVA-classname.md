@@ -1,6 +1,6 @@
 ---
-title: "[JAVA] Hello World!!"
-excerpt: "JAVA로 Hello World를 출력해보자."
+title: "[JAVA] 클래스명과 파일명은 왜 같아야 하는가?"
+excerpt: "JAVA에서 클래스명과 파일명이 같아야 하는 원인에 대해 알아보자."
 
 writer: Dayeong Kim
 categories:
@@ -11,7 +11,7 @@ tags:
 toc: true
 toc_sticky: true
 
-date: 2022-08-02
+date: 2022-08-03
 ---
 
 해당 게시글은 JAVA로 [Hello World 출력](https://day0522.github.io/posts/JAVA-HelloWorld/)하는 방법을 학습하던 중 **.java 파일의 이름과 내부 클래스명이 같아야 한다**는 사실에 궁금증이 생겨 작성한 글이다.
