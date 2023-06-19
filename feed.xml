@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+   <!-- 피드경로 명시 -->
+  <channel>
+    <title> 다롱이의 공부방  </title>
+    <description>A minimal, responsive, and powerful Jekyll theme for presenting professional writing.</description>
+    <link>https://day0522.github.io//</link>
+    <atom:link href="https://day0522.github.io//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 19 Jun 2023 19:49:48 +0900</pubDate>
+    <lastBuildDate>Mon, 19 Jun 2023 19:49:48 +0900</lastBuildDate>
+    <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>H2 Databse</title>
+        <description>
+</description>
+        <pubDate>Mon, 19 Jun 2023 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/h2-databse/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/h2-databse/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>[백준] 11726 2xn 타일링(Python)</title>
+        <description>&lt;p&gt;해당 게시글에서는 &lt;a href=&quot;https://www.acmicpc.net/problem/11726&quot;&gt;[백준] 11726 2xn 타일링&lt;/a&gt; 문제를 해설하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt;을 이용하여 풀고자 한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-접근법&quot;&gt;🤔 접근법&lt;/h1&gt;
+&lt;h6 id=&quot;문제-풀이-방식을-빠르게-알고싶다면-문제-풀이-부분-부터-봐주세요-&quot;&gt;문제 풀이 방식을 빠르게 알고싶다면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;💡문제 풀이&lt;/code&gt; 부분 부터 봐주세요 :)&lt;/h6&gt;
+
+&lt;p&gt;11726번 문제는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DP(다이나믹 프로그래밍)&lt;/code&gt;에 대한 문제로 &lt;strong&gt;복잡한 문제를 간단한 여러 개의 문제로 나누어 푸는 방법&lt;/strong&gt;하는 방식의 알고리즘이다.&lt;/p&gt;
+
+&lt;p&gt;현재 &lt;a href=&quot;https://github.com/encrypted-def/basic-algo-lecture/blob/master/workbook.md&quot;&gt;바킹독의 알고리즘 문제집&lt;/a&gt;을 참고하여 알고리즘 별로 문제를 풀고있기 때문에 이 문제가 DP 문제라는 것을 알고 있었다.
+하지만 해당 문제를 처음 접했을 때는 DP 문제라는 게 도저히 와닿지 않았다.&lt;/p&gt;
+
+&lt;p&gt;결과적으로 혼자 풀긴 했지만 만약 DP 문제인 것을 몰랐더라면? 나는 못 풀었을 것이라고 생각한다.&lt;/p&gt;
+
+&lt;p&gt;DP 문제의 경우 제시한 상황에 대한 규칙, 즉 점화식만 알면 어렵지 않기 때문에 직접 손으로 그려가며 규칙을 찾으려고 했다.&lt;/p&gt;
+
+&lt;p&gt;N번째 직사각형의 경우에 N-1번째, N-2번째, N-3번째, … 등과 어떤 규칙이 있는지 찾아보려고 했지만 도저히 찾을 수 없었다.&lt;/p&gt;
+
+&lt;p&gt;이러한 고민을 계속 하다가 든 생각이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'왜 굳이 기하적으로 생각하고 있지? 직사각형의 가로의 길이를 1과 2의 조합으로 나누면 되지 않나?'&lt;/code&gt;었다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-문제-풀이&quot;&gt;💡 문제 풀이&lt;/h1&gt;
+&lt;p&gt;즉, 2xn 크기의 직사각형을 1x2, 2x1 타일로 채우는 방법의 수는 &lt;strong&gt;직사각형의 가로를 1과 2의 조합으로 나누는 경우&lt;/strong&gt;와 동일하다!&lt;/p&gt;
+
+&lt;p&gt;이때 1(2x1 타일)과 2(1x2 타일)로 나누는 것은 2x1타일이 들어갈 자리와 1x2 타일이 들어갈 자리를 분배하는 것을 의미한다.&lt;/p&gt;
+
+&lt;p&gt;예를 들어 n이 3이라고 하면, 3을 1과 2의 조합으로 다음과 같이 나눌 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;1+1+1&lt;/li&gt;
+  &lt;li&gt;2+1&lt;/li&gt;
+  &lt;li&gt;1+2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/DAY0522/DAY0522.github.io/blob/master/_posts/image/BOJ-11726.png?raw=true&quot; alt=&quot;image&quot; class=&quot;align-center&quot; width=&quot;30%&quot; height=&quot;30%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;1의 위치에는 2x1의 타일을, 2의 위치에는 1x2의 타일을 넣으면 되는 것이다.&lt;/p&gt;
+
+&lt;p&gt;사실 &lt;a href=&quot;https://www.acmicpc.net/problem/9095&quot;&gt;1, 2, 3 더하기&lt;/a&gt; 문제와 접근 방식이 동일한 문제였다. 해당 문제를 풀었다면 유사한 방식으로 접근하면 된다.&lt;/p&gt;
+
+&lt;p&gt;그렇다면 이제 점화식을 어떻게 작성할 것인가? 정답을 알기 전에 다음 이미지를 통해 직접 규칙을 찾기를 바란다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/DAY0522/DAY0522.github.io/blob/master/_posts/image/BOJ-11726_3.jpg?raw=true&quot; alt=&quot;image&quot; class=&quot;align-center&quot; width=&quot;40%&quot; height=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 이미지를 통해 규칙을 찾기 어렵다면 아래 이미지도 참고하자!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/DAY0522/DAY0522.github.io/blob/master/_posts/image/BOJ-11726_2.jpg?raw=true&quot; alt=&quot;image&quot; class=&quot;align-center&quot; width=&quot;40%&quot; height=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;부연 설명을 하자면, 앞서 2xn 직사각형을 타일링 하기 위해선 n을 1과 2의 조합으로 나눠야 된다고 했고, 그럼 모든 경우에 대해 숫자의 끝은 1 아니면 2일 것이다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;끝이 1인 경우는 앞에 있는 숫자의 합이 n-1인 경우, 즉 앞부분은 2x(n-1) 타일링이 됐음을 의미&lt;/li&gt;
+  &lt;li&gt;끝이 2인 경우는 앞에 있는 숫자의 합이 n-2인 경우, 즉 앞부분은 2x(n-2) 타일링이 됐음을 의미&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;2xn 타일링은 끝이 1인 경우와 끝이 2인 경우의 합&lt;/strong&gt;인, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2x(n-1) 타일링 + 2x(n-2) 타일링&lt;/code&gt;인 것이다.&lt;/p&gt;
+
+&lt;p&gt;이를 코드로 나타내면 다음과 같다.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;-코드&quot;&gt;📂 코드&lt;/h1&gt;
+
+&lt;p&gt;위 문제 풀이 방식을 통해 해당 문제를 풀어낸 필자의 코드는 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10007&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Tue, 03 Jan 2023 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/BOJ-11726/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/BOJ-11726/</guid>
+        
+        <category>백준</category>
+        
+        <category>algorithm</category>
+        
+        <category>DP</category>
+        
+        <category>다이나믹 프로그래밍</category>
+        
+        <category>2xn 타일링</category>
+        
+        <category>BOJ</category>
+        
+        
+        <category>백준</category>
+        
+      </item>
+    
+      <item>
+        <title>[Trabot] 오픈소스 딥러닝 챗봇 Kochat demo 실행 에러 해결</title>
+        <description>&lt;p&gt;지난 게시글에서는 Kochat을 활용한 프로젝트인 Trabot에 대해서 설명했다.&lt;/p&gt;
+
+&lt;p&gt;Trabot 프로젝트의 레거시 코드를 수정하기 위해, 다시 Kochat을 실행하기 위한 준비를 해야 한다.&lt;/p&gt;
+
+&lt;p&gt;과거에도, 현재에도 Kochat 환경설정을 하는데 매우 애를 썼기 때문에 미래에서라도 이를 방지하고자 demo 실행 과정에 대한 기록을 하고자 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://willbesoon.tistory.com/250&quot;&gt;Kochat demo 실행&lt;/a&gt; 사이트에 설명이 잘 돼있으니 전반적인 내용은 해당 사이트를 참고하도록 하자. 필자는 위 사이트대로 진행하면서 문제가 발생한 부분만 추가적으로 기록할 것이다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-kochat-환경설정&quot;&gt;🤖 Kochat 환경설정&lt;/h1&gt;
+
+&lt;p&gt;먼저 &lt;a href=&quot;https://github.com/hyunwoongko/kochat&quot;&gt;Kochat github&lt;/a&gt;에 들어가 repo를 clone한다.&lt;/p&gt;
+
+&lt;p&gt;clone이 끝난 후에 해당 폴의 하위 폴더인 demo에 들어가면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application.py&lt;/code&gt; 파일이 있는데, 이게 Kochat을 사용하기 위한 서버 실행 코드이다.&lt;/p&gt;
+
+&lt;p&gt;우선 Kochat 프로젝트를 사용하기 위한 가상환경을 생성하자.&lt;/p&gt;
+
+&lt;p&gt;참고로 현재 필자의 개발환경은 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;pycharm: 2022.2.4&lt;/li&gt;
+  &lt;li&gt;pip: 22.3.1&lt;/li&gt;
+  &lt;li&gt;JDK: 19.0.1&lt;/li&gt;
+  &lt;li&gt;Anaconda3: 2022.10(Python 3.9.13 64-bit)&lt;/li&gt;
+  &lt;li&gt;_jpype.cp37-win_amd64.pyd&lt;/li&gt;
+  &lt;li&gt;venv python: 3.7&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;1️⃣-가상환경-설정&quot;&gt;1️⃣ 가상환경 설정&lt;/h1&gt;
+
+&lt;p&gt;Anaconda가 문제인 건지, Kochat이 문제인 건지 왠지 모를 이유로 Pycharm에서 가상환경 연결이 잘 안 됐다. 이런 경우에는 과감히 VScode 같은 다른 개발 환경으로 넘어가자.&lt;/p&gt;
+
+&lt;p&gt;필자는 데스크탑에서는 파이참으로 실행이 됐지만, VScode는 실행되지 않았다… (진짜 왜 그런지 모름)&lt;/p&gt;
+
+&lt;h1 id=&quot;2️⃣-라이브러리-설치&quot;&gt;2️⃣ 라이브러리 설치&lt;/h1&gt;
+
+&lt;p&gt;개발자가 작성해둔 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt;에 작성된대로 라이브러리를 설치하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application.py&lt;/code&gt;를 실행하면 라이브러리의 버전과 관련한 에러가 발생한다.&lt;/p&gt;
+
+&lt;p&gt;따라서 필자는 다음과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requirements.txt&lt;/code&gt; 파일을 수정했다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;matplotlib==3.2.1
+pandas==1.0.4
+gensim==3.8.3
+konlpy==0.5.2
+numpy==1.18.5
+joblib==0.15.1
+scikit-learn==0.23.1
+pytorch-crf==0.7.2
+requests==2.24.0
+flask==1.1.2
+jinja2&amp;lt;3.1.0
+itsdangerous==2.0.1
+werkzeug==2.0.3
+tweepy==3.10.0
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이후 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pip install -r .\requirements.txt&lt;/code&gt;를 다시 하자.&lt;/p&gt;
+
+&lt;h1 id=&quot;3️⃣-javaniofileinvailidpathexception-에러&quot;&gt;3️⃣ java.nio.file.InvailidPathException 에러&lt;/h1&gt;
+
+&lt;p&gt;이번에 데모 실행하면서 제일 난감했던 에러였다.
+위에서 게시한 블로그에도 같은 에러가 있었지만, 똑같이 설정해도 추가로 발생하는 에러이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://github.com/DAY0522/DAY0522.github.io/blob/master/_posts/image/kochat_demo_java_error.png?raw=true&quot; alt=&quot;image&quot; class=&quot;align-center&quot; width=&quot;40%&quot; height=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;해결 방법은 아래와 같이 하면 된다.&lt;/p&gt;
+
+&lt;p&gt;먼저 자신의 개발환경 디렉토리로 이동하고 다음 경로에 있는 파일을 찾자.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\Lib\site-packages\konlpy\jvm.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;해당 파일에 있는 아래 코드에서 *를 모두 없애자.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;n&quot;&gt;folder_suffix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# JAR
+&lt;/span&gt;    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Java sources
+&lt;/span&gt;    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}bin&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}*&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Hannanum
+&lt;/span&gt;    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}jhannanum-0.8.4.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Kkma
+&lt;/span&gt;    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}kkma-2.0.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Komoran3
+&lt;/span&gt;    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}aho-corasick.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}shineware-common-1.0.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}shineware-ds-1.0.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}komoran-3.0.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Twitter (Okt)
+&lt;/span&gt;    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}snakeyaml-1.12.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}scala-library-2.12.3.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}open-korean-text-2.1.0.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}twitter-text-1.14.7.jar&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{0}{1}*&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;거의 4시간 정도 싸운 후에 해결한 거 같다…&lt;/p&gt;
+
+&lt;p&gt;이 외에도 자바 관련 에러가 굉장히 많았는데 해결 됐음에도 왜 해결됐는지 이유조차 모르겠다.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Dec 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/kochat-demo/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/kochat-demo/</guid>
+        
+        <category>오픈소스</category>
+        
+        <category>opensource</category>
+        
+        <category>딥러닝</category>
+        
+        <category>챗봇</category>
+        
+        <category>프레임워크</category>
+        
+        <category>kochat</category>
+        
+        <category>demo</category>
+        
+        <category>한국어</category>
+        
+        
+        <category>Trabot</category>
+        
+      </item>
+    
+      <item>
+        <title>[Trabot] Kochat을 활용한 여행지 추천 챗봇 개발기</title>
+        <description>&lt;h1 id=&quot;-시작하기에-앞서&quot;&gt;🏳 시작하기에 앞서…&lt;/h1&gt;
+
+&lt;p&gt;갑자기 Kochat Demo 게시글을 작성하게 된 계기에 대해 말하고자 한다.&lt;/p&gt;
+
+&lt;p&gt;나는 &lt;strong&gt;빅데이터AI를 활용한 여행지 추천 챗봇서비스&lt;/strong&gt;를 주제로 2021 한이음 프로젝트에 참여했으며 입선했다.&lt;/p&gt;
+
+&lt;p&gt;하지만 학업과 동시에 프로젝트를 진행하면서 시험 기간과 프로젝트 마무리 기간이 겹치게 돼 프로젝트를 깔끔하게 마무리 하지 못했으며, 이에 대한 아쉬움을 늘 가지고 있었다. 또 과거에 비해 지금의 나는 성장했기 때문에, 그때 구현하지 못했던 것을 구현할 수 있을 거 같다는 자신감이 생겼다.&lt;/p&gt;
+
+&lt;p&gt;그래서 이번 기회에 기존의 코드를 개선하고 필요한 기능을 추가 구현하고자 다짐했다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-trabot이란&quot;&gt;✈ Trabot이란?&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Trabot&lt;/strong&gt;은 우리 팀이 한이음에서 개발한 챗봇 어플리케이션이다. 이는 ‘여행’을 의미하는 &lt;strong&gt;Tra&lt;/strong&gt;vle과 Chat&lt;strong&gt;bot&lt;/strong&gt;을 결합한 것으로, 여행에 관련한 챗봇을 의미한다.&lt;/p&gt;
+
+&lt;p&gt;해당 어플리케이션의 주된 목표는 사용자가 Trabot에게 원하는 여행지의 지역, 테마, 코스추천 등의 키워드를 입력하면, Trabot이 키워드에 관련된 여행지를 추천해주는 것이다. 사용자는 본인이 원하는 여행지를 손쉽게 찾을 수 있다는 장점이 있다.&lt;/p&gt;
+
+&lt;p&gt;왜 이러한 아이디어를 생각했냐면, 필자는 mbti에서 P 성향이 있어 여행을 갈 때 어디를 갈지, 무엇을 할지, 어떤 걸 먹을지 등 여행지를 찾는 과정이 너무 귀찮았다. 그래서 누군가가 내가 원하는 여행지를 찾아주면 정말 좋겠다고 생각했다. 이런 생각에서 파생된 게 바로 Trabot이다!&lt;/p&gt;
+
+&lt;h1 id=&quot;-어떻게-개선할-것인가&quot;&gt;❓ 어떻게 개선할 것인가?&lt;/h1&gt;
+
+&lt;p&gt;그렇다면 이전 한이음 프로젝트 때는 어떻게 진행한 것인가?&lt;/p&gt;
+
+&lt;p&gt;이때는 여행지를 추천해주기 위한 정보를 &lt;a href=&quot;https://korean.visitkorea.or.kr/main/main.do#home&quot;&gt;대한민국 구석구석&lt;/a&gt; 사이트에서 직접 동적 크롤링을 하여 챗봇에서 출력해주려고 했다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이 방법은 너무 오래 걸렸다… 애초에 여행지를 찾기 위해 페이지를 클릭하고, 여행지 상세 정보를 클릭하는 등 동적 크롤링 시간이 매우 오래 걸렸다. 그래서 당시 멘토님께서 추천해주신 방식이 크롤링한 정보를 DB에 저장해놓고 여행지를 출력할 때는 DB에 저장된 정보를 출력하는 것이었다.&lt;/p&gt;
+
+&lt;p&gt;그래서 우린 이 방식을 채택을 했고 이대로 프로젝트를 마무리 했었다.&lt;/p&gt;
+
+&lt;p&gt;하지만 지금 와서 생각해보니, DB의 정보를 계속 갱신해주지 않으면 사용자에게 최신의 정보를 추천해줄 수 없으므로 매우 수동적이며 좋지 않은 코드라고 생각한다. 또 크롤링으로 계속 갱신을 하기에는 효율성이 부족하다. 그래서 이번 기회에는 해당 기술을 개선하고자 했다.&lt;/p&gt;
+
+&lt;p&gt;당시에 우리 팀은 &lt;strong&gt;TourAPI&lt;/strong&gt;와 같이 한국관광공사에서 제공해주는 openAPI가 있는 것을 알았지만, 이를 이용할 수준이 되지 않았다. 시도 했지만 실패하여 위에서 언급한 방식을 그대로 이어갔다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이제는 할 수 있을 거 같고, 못할 거 같더라도 하고자 하는 의지가 생긴다. 그래서 이번엔 정말 openAPI를 이용해 사용자에게 더욱 최신의 정보를 제공할 수 있는 Trabot을 개발하고자 한다.&lt;/p&gt;
+
+&lt;p&gt;또 기회가 된다면 서버 배포까지 할 수 있기를 희망한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-마무리&quot;&gt;🔥 마무리&lt;/h1&gt;
+
+&lt;p&gt;이번 기회에 느꼈다. 프로젝트를 다시 진행하기 위해 Kochat 코드를 보는데 정말 새롭게 보는 코드 같았다. 내가 짠 코드도 정말 처음 보는 코드라는 생각이 들었다. 기록이라도 해놨으면 다시 이해하는 게 어렵지 않을텐데 당시 나는 기록의 중요성을 하나도 몰랐다.&lt;/p&gt;
+
+&lt;p&gt;그래서 이번에 다시 시작할 때는 내가 짠 코드, 프로젝트 관련 지식 등에 대해 자세히 기록하고자 한다.&lt;/p&gt;
+
+&lt;p&gt;잘 기록해서 유사한 프로젝트를 진행하려는 사람, 우리 팀원, 미래의 나에게 도움을 주고 싶다👊&lt;/p&gt;
+</description>
+        <pubDate>Sat, 17 Dec 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/trabot-what/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/trabot-what/</guid>
+        
+        <category>오픈소스</category>
+        
+        <category>opensource</category>
+        
+        <category>딥러닝</category>
+        
+        <category>챗봇</category>
+        
+        <category>프레임워크</category>
+        
+        <category>kochat</category>
+        
+        <category>demo</category>
+        
+        <category>한국어</category>
+        
+        
+        <category>Trabot</category>
+        
+      </item>
+    
+      <item>
+        <title>[백준] 14051 퇴사(Python)</title>
+        <description>&lt;p&gt;해당 게시글에서는 &lt;a href=&quot;https://www.acmicpc.net/problem/14501&quot;&gt;[백준] 14501 퇴사&lt;/a&gt; 문제를 해설하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt;을 이용하여 풀고자 한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-접근법&quot;&gt;🤔 접근법&lt;/h1&gt;
+&lt;h6 id=&quot;문제-풀이-방식을-빠르게-알고싶다면-문제-풀이-부분-부터-봐주세요-&quot;&gt;문제 풀이 방식을 빠르게 알고싶다면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;💡문제 풀이&lt;/code&gt; 부분 부터 봐주세요 :)&lt;/h6&gt;
+
+&lt;p&gt;필자는 본인의 힘으로 해당 문제를 풀지 못했다. 따라서 이후에 유사한 문제를 볼 때 기억이 더 잘 나도록 블로깅을 하려고 한다.&lt;/p&gt;
+
+&lt;p&gt;14501번  문제는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DP(다이나믹 프로그래밍)&lt;/code&gt;에 대한 문제로 &lt;strong&gt;복잡한 문제를 간단한 여러 개의 문제로 나누어 푸는 방법&lt;/strong&gt;하는 방식의 알고리즘이다.&lt;/p&gt;
+
+&lt;p&gt;현재 &lt;a href=&quot;https://github.com/encrypted-def/basic-algo-lecture/blob/master/workbook.md&quot;&gt;바킹독의 알고리즘 문제집&lt;/a&gt;을 참고하여 알고리즘 별로 문제를 풀고있기 때문에 이 문제가 DP 문제라는 것을 알고 있었다.&lt;/p&gt;
+
+&lt;p&gt;문제를 읽어가며 최대 수익을 내기 위한 방법을 찾으려고 시도했지만 실패했다. 같은 일에 상담을 하더라도 T&lt;sub&gt;i&lt;/sub&gt;에 저장된 값이 다르면 수익을 얻는 날짜가 다르기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;아이디어가 도저히 떠오르지 않자 구글링을 통해 아이디어를 탐색했다.&lt;/p&gt;
+
+&lt;p&gt;그 결과 &lt;strong&gt;뒤쪽 인덱스부터 접근해야 된다&lt;/strong&gt;는 것과
+&lt;strong&gt;i일에 상담을 진행한 경우와 아닌 경우&lt;/strong&gt;로 나눠 최댓값을 구하면 된다는 것을 알았다.&lt;/p&gt;
+
+&lt;p&gt;i일에 상담을 진행할 때의 수익은 i+T&lt;sub&gt;i&lt;/sub&gt;일에서의 수익에 P&lt;sub&gt;i&lt;/sub&gt;를 더한 값이며,
+i일에 상담을 진행하지 않았을 때의 수익은 i+1일에서의 최댓값이다.&lt;/p&gt;
+
+&lt;p&gt;즉 i일에서의 최댓값은 상담을 진행할 때, 진행하지 않았을 때 중 더 최댓값을 선택하면 된다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-문제-풀이&quot;&gt;💡 문제 풀이&lt;/h1&gt;
+&lt;p&gt;위에서의 아이디어를 정리하면 다음과 같다.&lt;/p&gt;
+
+&lt;p&gt;✅ i일에서의 최대 수익은 다음 중 큰 값에 해당&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;i일에 상담⭕: P[i]+dp[i+T&lt;sub&gt;i&lt;/sub&gt;]&lt;/li&gt;
+  &lt;li&gt;i일에 상담❌: dp[i+1]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이를 파이썬 코드로 나타내면 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이때 주의해야 할 부분은 N일 이후에는 수익을 낼 수 없으므로 이에 대한 예외처리를 해야한다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;또 이 부분에 어떤 식을 넣어줄 것인가도 고민해야 한다. 필자는 처음에 continue를 썼다가 해당하는 dp[i]에 모두 0이 저장되는 바람에 else에서 이전 값들이 갱신되지 않는 문제가 발생했다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-코드&quot;&gt;📂 코드&lt;/h1&gt;
+
+&lt;p&gt;위 문제 풀이 방식을 통해 해당 문제를 풀어낸 필자의 코드는 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readline&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# i번째 일에 상담 시 얻을 수 있는 최대 수익
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Fri, 16 Dec 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/BOJ-14501/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/BOJ-14501/</guid>
+        
+        <category>백준</category>
+        
+        <category>algorithm</category>
+        
+        <category>DP</category>
+        
+        <category>다이나믹 프로그래밍</category>
+        
+        <category>퇴사</category>
+        
+        <category>BOJ</category>
+        
+        
+        <category>백준</category>
+        
+      </item>
+    
+      <item>
+        <title>[HTML] HTML 태그의 종류</title>
+        <description>&lt;h1 id=&quot;-html-태그&quot;&gt;📂 HTML 태그&lt;/h1&gt;
+&lt;h3 id=&quot;-h-태그&quot;&gt;📌 h 태그&lt;/h3&gt;
+&lt;p&gt;문서에 대한 정보를 나타내는 태그&lt;/p&gt;
+
+&lt;p&gt;문서 내의 h1은 하나만!&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;hello world&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;hello world&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h3&amp;gt;&lt;/span&gt;hello world&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h3&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h4&amp;gt;&lt;/span&gt;hello world&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h4&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h5&amp;gt;&lt;/span&gt;hello world&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h5&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h6&amp;gt;&lt;/span&gt;hello world&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h6&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- h${hello world}*6와 동일 --&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;-p-태그&quot;&gt;📌 p 태그&lt;/h3&gt;
+&lt;p&gt;문단을 나타내는 태그&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;hello world&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;H&lt;span class=&quot;nt&quot;&gt;&amp;lt;sub&amp;gt;&lt;/span&gt;2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/sub&amp;gt;&lt;/span&gt;0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;x&lt;span class=&quot;nt&quot;&gt;&amp;lt;sup&amp;gt;&lt;/span&gt;2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/sup&amp;gt;&lt;/span&gt;=4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;-br-태그&quot;&gt;📌 br 태그&lt;/h3&gt;
+&lt;p&gt;개행을 위한 태그(enter가 아닌 br 태그를 이용해야 함.)&lt;/p&gt;
+
+&lt;h3 id=&quot;-hr-태그&quot;&gt;📌 hr 태그&lt;/h3&gt;
+&lt;p&gt;구분선을 나타내는 태그&lt;/p&gt;
+
+&lt;h3 id=&quot;-a-태그&quot;&gt;📌 a 태그&lt;/h3&gt;
+&lt;p&gt;어디론가 이동하게 해주는 태그&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://day0522.github.io/&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;click&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- url로 이동 --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://day0522.github.io/&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;target=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;_blank&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;click&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 새 창에서 url로 이동 --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;./index.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;click&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 현재 폴더의 파일로 이동 --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#move&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;click&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- move라는 id를 가진 태그로 이동 --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;./test.png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;click&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- 해당 파일 다운로드드 --&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;-link-태그&quot;&gt;📌 link 태그&lt;/h3&gt;
+&lt;p&gt;해당 문서와 외부 소스(external resource) 사이의 관계를 정의할 때 사용&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/css&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/examples/media/expand_style.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;-strongb-태그&quot;&gt;📌 strong/b 태그&lt;/h3&gt;
+&lt;p&gt;굵은 폰트로 적용해주는 태그&lt;/p&gt;
+
+&lt;p&gt;이때 strong 태그는 음성 인식 시 강조해서 읽는다. (시각 장애인을 위함)&lt;/p&gt;
+
+&lt;h3 id=&quot;-emi-태그&quot;&gt;📌 em/i 태그&lt;/h3&gt;
+&lt;p&gt;기울어진 폰트로 적용해주는 태그
+이때 em 태그는 음성 인식 시 강조해서 읽는다. (시각 장애인을 위함)&lt;/p&gt;
+
+&lt;h3 id=&quot;-mark-태그&quot;&gt;📌 mark 태그&lt;/h3&gt;
+&lt;p&gt;폰트를 강조해주는 태그(이떄 강조의 색은 CSS로 변경 가능)&lt;/p&gt;
+
+&lt;h3 id=&quot;-그외-태그&quot;&gt;📌 그외 태그&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;abbr : 준말 표현(NASA)&lt;/li&gt;
+  &lt;li&gt;kbd : 키보드&lt;/li&gt;
+  &lt;li&gt;pre : 있는 그대로&lt;/li&gt;
+  &lt;li&gt;code : 코드블록&lt;/li&gt;
+  &lt;li&gt;cite : 인용(q는 인용구, cite는 인용블록)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;-주석-작성&quot;&gt;📌 주석 작성&lt;/h3&gt;
+&lt;p&gt;Ctrl + / 를 통해 쉽게 작성할 수 있다.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 13 Dec 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/html-tag/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/html-tag/</guid>
+        
+        <category>HTML</category>
+        
+        <category>tag</category>
+        
+        <category>태그</category>
+        
+        
+        <category>HTML</category>
+        
+      </item>
+    
+      <item>
+        <title>[백준] 11729 하노이 탑 이동 순서(Python)</title>
+        <description>&lt;p&gt;해당 게시글에서는 &lt;a href=&quot;https://www.acmicpc.net/problem/11729&quot;&gt;[백준] 11729 하노이 탑 이동 순서&lt;/a&gt; 문제를 해설하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt;을 이용하여 풀고자 한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-문제-풀이&quot;&gt;💡 문제 풀이&lt;/h1&gt;
+
+&lt;p&gt;11729번 문제는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;재귀(recursion)&lt;/code&gt;로 유명한 하노이 탑 문제에 해당한다.&lt;/p&gt;
+
+&lt;p&gt;해당 문제에서는 입력된 초기 원판의 개수에 대해 하노이 탑 규칙에 따라 모든 원판을 이동시킬 때 옮긴 횟수(K)와 이동 경로를 출력해야 한다.&lt;/p&gt;
+
+&lt;p&gt;하노이 탑을 재귀적으로 구현하기 위해 원판 개수에 따라 반복되는 과정이 있는지 고민하는 시간을 가졌으며, 그 결과는 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;N개의 원판을 모두 옮기기 위해, 먼저 N-1개의 원판(가장 큰 원판을 제외한 나머지)을 다른 장대로 옮긴다.&lt;/li&gt;
+  &lt;li&gt;가장 큰 원판을 세 번째 장대로 옮긴다.&lt;/li&gt;
+  &lt;li&gt;이전에 옮긴 N-1개의 원판을 세 번째 장대로 옮긴다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위의 내용을 통해 재귀적으로 코드를 작성하면 다음과 같다. 자세한 코드는 아래를 참고하길 바란다.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nf&quot;&gt;hanoi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;via&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# N-1개의 원판 이동
+&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hanoi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;via&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 가장 큰 원판 이동
+&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hanoi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;via&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# N-1개의 원판을 가장 큰 원판 위로 이동
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;-코드&quot;&gt;📂 코드&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;start: 시작하는 장대&lt;/li&gt;
+  &lt;li&gt;via: 경유하는 장대&lt;/li&gt;
+  &lt;li&gt;end: 최종으로 모든 원판이 도착하는 장대
+```python
+global move
+move = []&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;def hanoi(N, start, via, end):
+    “””
+    :param N: 원판의 수
+    :param start: 시작 기둥
+    :param via: 중간 기둥
+    :param end: 끝 기둥
+    :return: 이동 횟수
+    “””
+    if N &amp;lt;= 1: # 원판이 1개 있는 경우
+        move.append((start, end))
+        return 1&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;cnt = 0
+cnt += hanoi(N-1, start, end, via) # N-1개의 원판을 보조 기둥에 모두 이동
+cnt += hanoi(1, start, via, end) # 가장 큰 원판을 끝 기둥에 이동
+cnt += hanoi(N-1, via, start, end) # N-1개의 원판을 끝 기둥에 이동
+return cnt
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;print(hanoi(int(input()), 1, 2, 3))
+for f, t in move:
+    print(f, t)&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+</description>
+        <pubDate>Sun, 27 Nov 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/BOJ-11729/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/BOJ-11729/</guid>
+        
+        <category>백준</category>
+        
+        <category>algorithm</category>
+        
+        <category>알고리즘</category>
+        
+        <category>재귀</category>
+        
+        <category>recursion</category>
+        
+        <category>하노이 탑</category>
+        
+        
+        <category>백준</category>
+        
+      </item>
+    
+      <item>
+        <title>[백준] 2447 별 찍기 - 10(Python)</title>
+        <description>&lt;p&gt;해당 게시글에서는 &lt;a href=&quot;https://www.acmicpc.net/problem/2447&quot;&gt;[백준] 2447 별 찍기 - 10&lt;/a&gt; 문제를 해설하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt;을 이용하여 풀고자 한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-문제-풀이&quot;&gt;💡 문제 풀이&lt;/h1&gt;
+
+&lt;p&gt;2447번 문제는 별 찍기 문제이다.&lt;/p&gt;
+
+&lt;p&gt;처음에 문제를 읽었을 때 단번에 이해가 되지 않았다. 지문과 예제를 동시에 보며 조금 고민하고 나서야 문제가 이해됐다.&lt;/p&gt;
+
+&lt;p&gt;단계별로 풀어보기 카테고리를 통해서 들어왔기 때문에 해당 문제가 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;재귀(recursion)&lt;/code&gt;와 관련된 문제인 걸 알고 있었다. 그래서 재귀적으로 해당 문제를 풀기 위해 근접한 입력값들에 대해 어떤 규칙이 있는지 생각해 봤으며, 그 결과 다음과 같은 결론을 내릴 수 있었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;N을 출력하기 위해선 N//3의 출력 결과가 필요하다.&lt;/li&gt;
+  &lt;li&gt;N을 출력할 때는 N/3의 출력을 3번씩 3줄에 걸쳐 출력하면 된다. 이때 2줄의 2번째 출력은 공백이어야 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위 사실을 알면 해당 문제를 어렵지 않게 풀 수 있다. (규칙은 어느 정도 잘 알아냈지만, 각 출력을 어떤 형태로 저장할지에 대한 고민이 조금 많긴 했다…)&lt;/p&gt;
+
+&lt;h1 id=&quot;-code-1️⃣&quot;&gt;📂 Code 1️⃣&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;재귀&lt;/code&gt; 함수를 작성할 때 중요한 점은 예외 처리를 해야 한다는 것이다.&lt;/p&gt;
+
+&lt;p&gt;여기선 n이 1일 때가 최초 입력이며 그때의 결과는 ‘*‘이므로 해당 문자를 반환하게 했다.&lt;/p&gt;
+
+&lt;p&gt;입력 n에 대해 별을 찍기 위해서는 n//3의 출력이 필요하므로 재귀 함수를 이용해 반환값을 저장하도록 했다.&lt;/p&gt;
+
+&lt;p&gt;입력이 n일 때 출력은 n줄 출력되므로 for문을 n번 돌며 위에 작성한 규칙에 따라 배열(result)에 문자열을 저장해 주었다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw_star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 배열(ans)에 ***를 저장
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;star&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw_star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; &lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw_star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;-code-2️⃣&quot;&gt;📂 Code 2️⃣&lt;/h1&gt;
+&lt;p&gt;위와 같이 코드를 작성하면서, 규칙에 따라 수식들을 작성하는 게 머리가 아팠다. 더 쉬운 방법이 있을 거 같아 구글링 해 본 결과 다음과 같이 더욱 간단하게 풀어냈다.&lt;/p&gt;
+
+&lt;p&gt;Code 1️⃣에서는 for문 하나에 걸쳐 모든 값을 저장하려고 했는데 그럴 필요가 없었다는 걸 깨달았다. 그렇게 풀이하려고 하니까 예외 처리 및 인덱스 접근을 하기 위해 수식 처리하는 것이 어려워졌다고 생각한다.&lt;/p&gt;
+
+&lt;p&gt;아래와 같이 이전 입력(n //3)에 대한 for문을 각각 3번 돌리면 출력이 더&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw_star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;stars&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw_star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 이전 단계의 별의 패턴을 저장(재귀)
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; &lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw_star&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 23 Nov 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/BOJ-2447/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/BOJ-2447/</guid>
+        
+        <category>백준</category>
+        
+        <category>algorithm</category>
+        
+        <category>알고리즘</category>
+        
+        <category>재귀</category>
+        
+        <category>recursion</category>
+        
+        <category>별 찍기</category>
+        
+        
+        <category>백준</category>
+        
+      </item>
+    
+      <item>
+        <title>[백준] 1431 시리얼 번호(Python)</title>
+        <description>&lt;p&gt;해당 게시글에서는 &lt;a href=&quot;https://www.acmicpc.net/problem/1431&quot;&gt;[백준] 1431 시리얼 번호&lt;/a&gt; 문제를 해설하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt;을 이용하여 풀고자 한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-접근법&quot;&gt;🤔 접근법&lt;/h1&gt;
+&lt;p&gt;1341번 문제는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;정렬&lt;/code&gt;에 관한 문제이다.&lt;/p&gt;
+
+&lt;p&gt;애초에 문제에서 정렬이라고 밝히고 있기 때문에 정렬 문제라는 걸 아는 건 크게 어렵지 않을 것이다.&lt;/p&gt;
+
+&lt;p&gt;시리얼번호 A가 시리얼번호 B의 앞에 오는 조건은 다음과 같이 해석할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A와 B의 길이가 다르면, 짧은 것이 먼저 온다. 👉 &lt;strong&gt;문자열의 길이&lt;/strong&gt;에 따라 정렬&lt;/li&gt;
+  &lt;li&gt;만약 서로 길이가 같다면, A의 모든 자리수의 합과 B의 모든 자리수의 합을 비교해서 작은 합을 가지는 것이 먼저온다. (숫자인 것만 더한다) 👉 &lt;strong&gt;각 자리 숫자의 모든 합&lt;/strong&gt;에 따라 정렬&lt;/li&gt;
+  &lt;li&gt;만약 1,2번 둘 조건으로도 비교할 수 없으면, 사전순으로 비교한다. 숫자가 알파벳보다 사전순으로 작다. 👉 &lt;strong&gt;사전순&lt;/strong&gt; 정렬(기본 sort 정렬)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;따라서 람다함수를 통해 정렬의 우선 순위에 따라 인자를 잘 넘겨주면 될 것이라 생각했다.&lt;/p&gt;
+
+&lt;p&gt;하지만 첫 번째, 세 번째 조건은 len() 함수와 일반적인 sort를 쓰면 될 것이라 생각했지만, 두 번째 조건을 처리할 방법을 모르겠어서 다른 블로그를 참고했다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-문제-풀이&quot;&gt;💡 문제 풀이&lt;/h1&gt;
+&lt;p&gt;이제 문제의 조건은 모두 파악했으므로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sort&lt;/code&gt; 함수와, 정렬의 조건이 되는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lambda&lt;/code&gt; 식을 잘 작성하면 된다.&lt;/p&gt;
+
+&lt;p&gt;첫 번째 조건은 len 함수를, 세 번째 조건은 원래 값을 lambda에 넘겨주면 되지만, 두 번째 조건을 바로 나타낼 수 있는 함수는 없다.&lt;/p&gt;
+
+&lt;p&gt;따라서 다음과 같이 string에서의 숫자 문자들의 합을 반환하는 함수를 정의했다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_digit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;isdigit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;모든 조건을 처리할 수 있게 됐으므로 이제 lambda 식을 작성하면 된다.&lt;/p&gt;
+
+&lt;p&gt;lambda를 통해 여러 조건에 따른 정렬을 할 때, &lt;strong&gt;조건이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;앞&lt;/code&gt;에 올수록 먼저 정렬&lt;/strong&gt;된다는 것을 알아두자. 또 lambda에 넘겨준 매개변수의 값이 작을수록 앞에 위치한다.&lt;/p&gt;
+
+&lt;p&gt;우선순위가 큰 것이 앞에 와야하므로 첫 번째 조건인 string의 길이를 나타내는 len(x)를 맨 앞에, 두 번째 조건인 sum_digit(x)를 그 다음에, 사전순 정렬(일반 정렬)을 나타내는 x를 마지막에 작성했다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nf&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_digit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;-code&quot;&gt;📂 Code&lt;/h1&gt;
+&lt;p&gt;위 문제 풀이 방식을 통해 해당 문제를 풀어낸 필자의 코드는 다음과 같다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readline&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_digit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;isdigit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ans&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sum_digit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+    &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Fri, 09 Sep 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/BOJ-1431/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/BOJ-1431/</guid>
+        
+        <category>백준</category>
+        
+        <category>algorithm</category>
+        
+        <category>알고리즘</category>
+        
+        <category>정렬</category>
+        
+        <category>시리얼 번호</category>
+        
+        
+        <category>백준</category>
+        
+      </item>
+    
+      <item>
+        <title>[JAVA] 클래스명과 파일명은 왜 같아야 하는가?</title>
+        <description>&lt;p&gt;해당 게시글은 JAVA로 &lt;a href=&quot;https://day0522.github.io/posts/JAVA-HelloWorld/&quot;&gt;Hello World 출력&lt;/a&gt;하는 방법을 학습하던 중 &lt;strong&gt;.java 파일의 이름과 내부 클래스명이 같아야 한다&lt;/strong&gt;는 사실에 궁금증이 생겨 작성한 글이다.&lt;/p&gt;
+
+&lt;h1 id=&quot;-java-클래스명과-파일명은-왜-같아야-하는가&quot;&gt;💡 JAVA 클래스명과 파일명은 왜 같아야 하는가?&lt;/h1&gt;
+
+&lt;p&gt;이는 다음과 같은 이유가 있다고 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://velog.velcdn.com/images%2Fredgem92%2Fpost%2F161dedf0-de10-46e2-80b4-e929d51dd258%2Fimage.png&quot; alt=&quot;image&quot; class=&quot;align-center&quot; width=&quot;40%&quot; height=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Java 프로그램을 작성할 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.java&lt;/code&gt; 파일로 저장되지만 컴파일 될 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.class&lt;/code&gt; 파일인 바이트 코드를 형성한다. 따라서 &lt;strong&gt;클래스 이름을 파일명과 동일하게 만들면 모호함이 사라진다&lt;/strong&gt;는 것이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;JVM이 해당 클래스를 진입점으로 인식&lt;/strong&gt;해야 하기 때문이다. &lt;br /&gt; 이때 JVM은 Java Virtual Machine의 줄임말로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OS에 종속받지 않고 CPU가 JAVA를 인식/실행할 수 있게 하는 가상 컴퓨터&lt;/code&gt;이다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;만약 이름이 다르다면, 소스 파일에 class가 하나 이상인 경우 &lt;strong&gt;JAVA 인터프리터가 해석해야 하는 class와 프로그램의 진입점을 포함하는 class를 쉽게 인식&lt;/strong&gt;할 수 없다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;하지만 클래스가 public이 아닌 경우엔 동일하지 않아도 된다고 한다.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 03 Aug 2022 00:00:00 +0900</pubDate>
+        <link>https://day0522.github.io//posts/JAVA-classname/</link>
+        <guid isPermaLink="true">https://day0522.github.io//posts/JAVA-classname/</guid>
+        
+        <category>JAVA</category>
+        
+        <category>자바</category>
+        
+        <category>HelloWorld</category>
+        
+        <category>출력</category>
+        
+        <category>print</category>
+        
+        
+        <category>JAVA</category>
+        
+      </item>
+    
+  </channel>
+</rss>
