@@ -11,7 +11,7 @@ tags:
 toc: true
 toc_sticky: true
 
-date: 2022-02-10
+date: 2023-02-10
 ---
 
 Spring Initializr를 통해 Spring 프로젝트 파일을 생성하고, build.gradle을 실행하면 다음과 같은 오류가 발생할 때가 있다.
